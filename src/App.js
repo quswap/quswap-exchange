@@ -39,7 +39,7 @@ export default function App() {
                       type="button"
                       className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-700 hover:bg-indigo-600"
                     >
-                      0x61684651684846
+                      QmR6vTe...KFfPYa
                     </button>
                     <button
                       type="button"
