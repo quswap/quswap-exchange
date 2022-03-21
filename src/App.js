@@ -10,18 +10,6 @@ const user = {
   imageUrl:
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
-const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
-  { name: 'Reports', href: '#', current: false },
-]
-const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
-]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -73,7 +61,7 @@ export default function App() {
                           leaveTo="transform opacity-0 scale-95"
                         >
                           <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                            {userNavigation.map((item) => (
+                            {/* {userNavigation.map((item) => (
                               <Menu.Item key={item.name}>
                                 {({ active }) => (
                                   <a
@@ -87,7 +75,7 @@ export default function App() {
                                   </a>
                                 )}
                               </Menu.Item>
-                            ))}
+                            ))} */}
                           </Menu.Items>
                         </Transition>
                       </Menu>
@@ -109,7 +97,7 @@ export default function App() {
 
               <Disclosure.Panel className="md:hidden">
                 <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                  {navigation.map((item) => (
+                  {/* {navigation.map((item) => (
                     <Disclosure.Button
                       key={item.name}
                       as="a"
@@ -122,7 +110,7 @@ export default function App() {
                     >
                       {item.name}
                     </Disclosure.Button>
-                  ))}
+                  ))} */}
                 </div>
                 <div className="pt-4 pb-3 border-t border-gray-700">
                   <div className="flex items-center px-5">
@@ -142,7 +130,7 @@ export default function App() {
                     </button>
                   </div>
                   <div className="mt-3 px-2 space-y-1">
-                    {userNavigation.map((item) => (
+                    {/* {userNavigation.map((item) => (
                       <Disclosure.Button
                         key={item.name}
                         as="a"
@@ -151,7 +139,7 @@ export default function App() {
                       >
                         {item.name}
                       </Disclosure.Button>
-                    ))}
+                    ))} */}
                   </div>
                 </div>
               </Disclosure.Panel>
