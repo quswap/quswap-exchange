@@ -62,11 +62,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example() {
+export default function OrderFilters() {
   const [open, setOpen] = useState(false)
 
   return (
-    <div className="bg-white">
+    <div className="bg-white rounded-md">
       {/* Mobile filter dialog */}
       {/* <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 flex z-40 sm:hidden" onClose={setOpen}>
@@ -151,6 +151,9 @@ export default function Example() {
           </Transition.Child>
         </Dialog>
       </Transition.Root> */}
+      <div className="mx-auto pt-8 px-4 sm:px-6 lg:px-8">
+        <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">Search</h1>
+      </div>
 
       <section aria-labelledby="filter-heading">
         <h2 id="filter-heading" className="sr-only">
@@ -193,17 +196,47 @@ export default function Example() {
               </Transition>
             </Menu>
 
-            <button
-              type="button"
-              className="inline-block text-sm font-medium text-gray-700 hover:text-gray-900 sm:hidden"
-              onClick={() => setOpen(true)}
-            >
-              Filters
-            </button>
-
             <div className="hidden sm:block">
-              <div className="flow-root">
-                <Popover.Group className="-mx-4 flex items-center divide-x divide-gray-200">
+              <form>
+                <div className="flex flex-row gap-x-4 items-end">
+                  <div className="sm:col-span-3">
+                    <label htmlFor="first-name" className="block text-sm font-medium text-black">
+                      Wanting:
+                    </label>
+                    <div className="mt-1">
+                      <input
+                        type="text"
+                        autoComplete="none"
+                        placeholder="BTC,ETH,XRP"
+                        className="focus:border-gray-500 block w-full sm:text-sm border p-2 border-gray-300 rounded-md bg-gray-50"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="sm:col-span-3">
+                    <label htmlFor="last-name" className="block text-sm font-medium text-black">
+                      Offering:
+                    </label>
+                    <div className="mt-1">
+                      <input
+                        type="text"
+                        autoComplete="none"
+                        placeholder="BTC,ETH,XRP"
+                        className="focus:border-gray-500 block w-full sm:text-sm border p-2 border-gray-300 rounded-md bg-gray-50"
+                      />
+                    </div>
+                  </div>
+
+
+                  <button
+                    type="submit"
+                    className="ml-3 h-fit inline-flex justify-end py-2 px-4 border text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-900"
+                  >
+                    Search
+                  </button>
+                </div>
+              </form>
+              {/* <Popover.Group className="-mx-4 flex items-center divide-x divide-gray-200">
                   {filters.map((section, sectionIdx) => (
                     <Popover key={section.name} className="px-4 relative inline-block text-left">
                       <Popover.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
@@ -217,7 +250,15 @@ export default function Example() {
                           className="flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500"
                           aria-hidden="true"
                         />
+                        <input
+                          type="email"
+                          name="email"
+                          id="email"
+                          className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                          placeholder="you@example.com"
+                        />
                       </Popover.Button>
+                      
 
                       <Transition
                         as={Fragment}
@@ -253,14 +294,13 @@ export default function Example() {
                       </Transition>
                     </Popover>
                   ))}
-                </Popover.Group>
-              </div>
+                </Popover.Group> */}
             </div>
           </div>
         </div>
 
         {/* Active filters */}
-        <div className="bg-gray-100">
+        <div className="bg-gray-100 rounded-b-md">
           <div className="max-w-7xl mx-auto py-3 px-4 sm:flex sm:items-center sm:px-6 lg:px-8">
             <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-500">
               Filters
