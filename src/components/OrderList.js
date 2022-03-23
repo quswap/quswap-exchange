@@ -5,35 +5,75 @@ import OrderFilters from './OrderFilters'
 const listings = [
   {
     id: 1,
-    offering: 'XRP,TRX,NFT',
-    wanting: 'BTC,ETH',
-    offerValue: 3499905,
-    wantValue: 3500000,
-    upside: .001,
+    offering: 'XRP/TRX/NFT',
+    wanting: 'BTC/ETH',
+    offerValue: 24466.89,
+    wantValue: 24480.72,
+    upside: 3.49,
   },
   {
     id: 1,
-    offering: 'XRP,TRX,NFT',
-    wanting: 'BTC,ETH',
-    offerValue: 3499905,
-    wantValue: 3500000,
-    upside: -.001,
+    offering: 'XRP/TRX/NFT',
+    wanting: 'XMR/APE',
+    offerValue: 11182.17,
+    wantValue: 11180.72,
+    upside: -1.24,
   },
   {
     id: 1,
-    offering: 'XRP,TRX,NFT',
-    wanting: 'BTC,ETH',
-    offerValue: 3499905,
-    wantValue: 3500000,
-    upside: -.001,
+    offering: 'XRP/TRX/NFT',
+    wanting: 'ALTS',
+    offerValue: 28820.99,
+    wantValue: 28819.82,
+    upside: -0.04,
   },
   {
     id: 1,
-    offering: 'XRP,TRX,NFT',
-    wanting: 'BTC,ETH',
-    offerValue: 3499905,
-    wantValue: 3500000,
-    upside: .001,
+    offering: 'XRP/TRX/NFT',
+    wanting: 'BULL/JST',
+    offerValue: 4260.65,
+    wantValue: 4263.18,
+    upside: 2.32,
+  },
+  {
+    id: 1,
+    offering: 'XRP/TRX/NFT',
+    wanting: 'LTC/ELON',
+    offerValue: 2066.96,
+    wantValue: 2075.02,
+    upside: 6.81,
+  },
+  {
+    id: 1,
+    offering: 'XRP/TRX/NFT',
+    wanting: 'SAND/USDT',
+    offerValue: 38469.52,
+    wantValue: 38461.28,
+    upside: -3.36,
+  },
+  {
+    id: 1,
+    offering: 'XRP/TRX/NFT',
+    wanting: 'JPEG',
+    offerValue: 35795.12,
+    wantValue: 35798.02,
+    upside: 2.53,
+  },
+  {
+    id: 1,
+    offering: 'XRP/TRX/NFT',
+    wanting: 'ZRX',
+    offerValue: 17267.95,
+    wantValue: 17270.73,
+    upside: 3.12,
+  },
+  {
+    id: 1,
+    offering: 'XRP/TRX/NFT',
+    wanting: 'MANA/HUNT',
+    offerValue: 18230.47,
+    wantValue: 18222.34,
+    upside: -6.57,
   },
   // More transactions...
 ]
@@ -92,10 +132,10 @@ export default function OrderList() {
                       <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">{listing.wanting}</td>
                       <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">{listing.offerValue}</td>
                       <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">{listing.wantValue}</td>
-                      <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">{listing.upside}</td>
+                      <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">{listing.upside + '%'}</td>
                       <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                          View Detail
+                          View
                         </a>
                       </td>
                     </tr>

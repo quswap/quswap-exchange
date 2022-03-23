@@ -56,7 +56,7 @@ const filters = [
     ],
   }
 ]
-const activeFilters = [{ value: 'BTC,ETH,TRX', label: 'Wanting: XRP,TRX,NFT' }]
+const activeFilters = [{ value: 'BTC,ETH,TRX', label: 'Wanting: XRP/TRX/NFT' }]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -207,7 +207,7 @@ export default function OrderFilters() {
                       <input
                         type="text"
                         autoComplete="none"
-                        placeholder="BTC,ETH,XRP"
+                        placeholder="BTC/ETH/XRP"
                         className="focus:border-gray-500 block w-full sm:text-sm border p-2 border-gray-300 rounded-md bg-gray-50"
                       />
                     </div>
@@ -221,7 +221,7 @@ export default function OrderFilters() {
                       <input
                         type="text"
                         autoComplete="none"
-                        placeholder="BTC,ETH,XRP"
+                        placeholder="BTC/ETH/XRP"
                         className="focus:border-gray-500 block w-full sm:text-sm border p-2 border-gray-300 rounded-md bg-gray-50"
                       />
                     </div>
