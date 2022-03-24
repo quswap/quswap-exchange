@@ -44,7 +44,10 @@ export default function App() {
   const initializeQuPeer = () => {
     (async () => {
       const signer = await getSignerAndInitialize();
-      setQuPeer(await QuPeer.fromPassword(signer, await signer.getAddress()));
+      setQuPeer(await QuPeer.fromPassword({
+        signer,
+        password: await signer.getAddress()
+      }));
     })().catch(console.error);
   };
   return (
@@ -74,7 +77,7 @@ export default function App() {
 			      initializeQuPeer();
 		      } }
                     >
-		      { quPeer && quPeer.p2p.toB58String() || 'Connect to qup2p' }
+		      { quPeer && quPeer.p2p.peerId.toB58String() || 'Connect to qup2p' }
                     </button>
                     <button
                       type="button"
