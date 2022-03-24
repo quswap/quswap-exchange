@@ -3,6 +3,10 @@ import { Disclosure } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import QuswapLogo from './quswap_img_replacement.png'
 import OrderList from './components/OrderList'
+import React, { useState } from 'react';
+import { memoize } from 'lodash';
+import { ethers } from 'ethers';
+import { QuPeer } from 'quswap-protocol';
 
 const user = {
   name: 'Tom Cook',
@@ -11,9 +15,40 @@ const user = {
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
 
+const QuPeerContext = React.createContext(null);
+
+const getProvider = memoize(() => {
+  return new ethers.providers.Web3Provider(window.ethereum);
+});
+
+const getSigner = memoize(() => {
+  try {
+    return getProvider().getSigner();
+  } catch (e) {
+    return getProvider();
+  }
+});
+
+const getSignerAndInitialize = memoize(async () => {
+  try {
+    const signer = getSigner();
+    await window.ethereum.enable();
+    return signer;
+  } catch (e) {
+    return getProvider();
+  }
+});
+
 export default function App() {
+  const [ quPeer, setQuPeer ] = useState(null);
+  const initializeQuPeer = () => {
+    (async () => {
+      const signer = await getSignerAndInitialize();
+      setQuPeer(await QuPeer.fromPassword(signer, await signer.getAddress()));
+    })().catch(console.error);
+  };
   return (
-    <>
+    <QuPeerContext.Provider value={ quPeer }>
       <div className="min-h-full">
         <Disclosure as="nav" className="bg-gray-800">
           {({ open }) => (
@@ -34,8 +69,12 @@ export default function App() {
                     <button
                       type="button"
                       className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-700 hover:bg-indigo-600"
+		      onClick={ (evt) => {
+			      evt.preventDefault();
+			      initializeQuPeer();
+		      } }
                     >
-                      QmR6vTe...KFfPYa
+		      { quPeer && quPeer.p2p.toB58String() || 'Connect to qup2p' }
                     </button>
                     <button
                       type="button"
@@ -128,6 +167,6 @@ export default function App() {
           </div>
         </main>
       </div>
-    </>
+    </QuPeerContext.Provider>
   )
 }
