@@ -82,11 +82,12 @@ const listings = [
 
 export default function OrderList() {
   const [selectedOrder, setSelectedOrder] = useState({})
+  const [modalCount, setModalCount] = useState(0);
   
   return (
     <div className="p-8 sm:px-6 lg:px-8 border-2 border-gray-200 p-4 bg-gray-200 rounded-md">
       <OrderFilters />
-      <BuyModal selectedOrder={selectedOrder} />
+      <BuyModal selectedOrder={selectedOrder} modalCount={modalCount}/>
       <div className="mt-8 flex flex-col">
         <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -139,7 +140,13 @@ export default function OrderList() {
                       <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">{listing.wantValue}</td>
                       <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">{listing.upside + '%'}</td>
                       <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <button onClick={() => setSelectedOrder(listing)} className="text-indigo-600 hover:text-indigo-900">
+                        <button 
+                          onClick={() => {
+                            setSelectedOrder(listing)
+                            setModalCount(modalCount + 1)
+                          }}
+                          className="text-indigo-600 hover:text-indigo-900"
+                        >
                           View
                         </button>
                       </td>
