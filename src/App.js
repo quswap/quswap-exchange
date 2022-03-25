@@ -24,7 +24,7 @@ const getSigner = memoize(() => {
 const getSignerAndInitialize = memoize(async () => {
   try {
     const signer = getSigner();
-    await window.ethereum.enable();
+    await window.ethereum.request({ method: 'eth_requestAccounts' })
     return signer;
   } catch (e) {
     return getProvider();
@@ -64,12 +64,9 @@ export default function App() {
                     <button
                       type="button"
                       className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-700 hover:bg-indigo-600"
-                      onClick={ (evt) => {
-                        evt.preventDefault();
-                        initializeQuPeer();
-                      } }
+                      onClick= { () => initializeQuPeer() }
                     >
-		                { quPeer && quPeer.p2p.peerId.toB58String() || 'Connect to qup2p' }
+		                { quPeer ? quPeer.p2p.peerId.toB58String() : 'Connect to qup2p' }
                     </button>
                     <button
                       type="button"
