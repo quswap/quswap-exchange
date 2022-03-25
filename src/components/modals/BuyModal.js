@@ -1,8 +1,9 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import { Dialog, Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/outline'
 import { classNames } from '../../helpers/JoinClassNames'
+import { QuPeerContext } from '../../contexts/QuPeerContext'
 
 const phonons = [
   { id: 1, name: '34.5689 BULL' },
@@ -12,6 +13,7 @@ const phonons = [
 ]
 
 export default function BuyModal(props) {
+  const [peer, quPeer] = useContext(QuPeerContext)
   const [order, setOrder] = useState({})
   const [open, setOpen] = useState(false)
   const [selected, setSelected] = useState(phonons[3])
