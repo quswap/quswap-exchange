@@ -33,6 +33,8 @@ const getSignerAndInitialize = memoize(async () => {
 
 export default function App() {
   const [ quPeer, setQuPeer ] = useState(null);
+  const [ bondedQu, setBondedQu ] = useState(0);
+
   const initializeQuPeer = () => {
     (async () => {
       const signer = await getSignerAndInitialize();
@@ -71,8 +73,9 @@ export default function App() {
                     <button
                       type="button"
                       className="inline-flex items-center ml-2 px-3 py-2 border-indigo-600/100 bg-sky-700 text-sm leading-4 font-medium rounded-md text-white hover:bg-sky-600"
+                      onClick = { () => setBondedQu(bondedQu + 1)}
                     >
-                      16 QU Bonded | $50000
+                      { bondedQu ? bondedQu + 'QU Bonded | $50000' : 'Bond Qu' }
                     </button>
                     <button
                       type="button"
