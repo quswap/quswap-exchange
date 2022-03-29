@@ -2,7 +2,6 @@
 
 const axios = require('axios');
 const ethers = require('ethers');
-const { result, random } = require('lodash');
 
 const requestURL = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3';
 const utils = ethers.utils;
@@ -41,13 +40,7 @@ const randomAdvertisement = async () => {
     const phononPubkey = randomAddress();
 
     var rOne = getRandomIntInclusive(0, 99);
-    var rTwo = 0;
-    do {
-        rTwo = getRandomIntInclusive(0, 99);
-    } while(rTwo == rOne);
-
-    const giveToken = allData.tokenDayDatas[rOne].token.id;
-    const wantToken = allData.tokenDayDatas[rTwo].token.id;
+    const wantTokenSymbol = allData.tokenDayDatas[rOne].token.symbol;
     const qty = getRandomArbitrary(0.01, 100.00);
 
     const randomAd = {
@@ -59,7 +52,7 @@ const randomAdvertisement = async () => {
                 assets: [
                   {
                     network: "ethereum",
-                    address: phononPubkey,
+                    address: phononPubkey
                   },
                 ],
               },
@@ -69,21 +62,18 @@ const randomAdvertisement = async () => {
         asks: [{
             gives: [
                 {
-                    network: 'ethereum',
-                    address: giveToken
+                    address: randomAddress()
                 }
             ],
             wants: [
                 {
                     network: 'ethereum',
-                    address: wantToken,
+                    asset: utils.toUtf8Bytes(wantTokenSymbol),
                     qty: qty
                 }
             ]  
         }]
     }
-
-    console.log(randomAd);
 }
 
 randomAdvertisement();
