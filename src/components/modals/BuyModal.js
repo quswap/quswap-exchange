@@ -1,9 +1,8 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useContext, useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { Dialog, Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/outline'
 import { classNames } from '../../helpers/JoinClassNames'
-import { QuPeerContext } from '../../contexts/QuPeerContext'
 
 const phonons = [
   { id: 1, name: '34.5689 BULL' },
@@ -13,7 +12,6 @@ const phonons = [
 ]
 
 export default function BuyModal(props) {
-  const [peer, quPeer] = useContext(QuPeerContext)
   const [order, setOrder] = useState({})
   const [open, setOpen] = useState(false)
   const [selected, setSelected] = useState(phonons[3])
@@ -21,7 +19,7 @@ export default function BuyModal(props) {
   useEffect(() => {
     setOrder(props.selectedOrder)
     setOpen(Object.keys(props.selectedOrder).length !== 0)
-  }, [props.modalCount])
+  }, [props.modalCount, props.selectedOrder])
 
   const cancelButtonRef = useRef(null)
 
@@ -66,7 +64,7 @@ export default function BuyModal(props) {
                         <>
                           <Listbox.Label className="block text-sm font-medium text-gray-700">Phonon To Use For Payment:</Listbox.Label>
                             <div className="mt-1 relative">
-                              <Listbox.Button className="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                              <Listbox.Button className="bg-white cursor-pointer relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                 <span className="block truncate">{selected.name}</span>
                                 <span className="absolute pt-2 inset-y-0 right-0 flex items-left pr-2 pointer-events-none">
                                   <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -87,7 +85,7 @@ export default function BuyModal(props) {
                                       className={({ active }) =>
                                         classNames(
                                           active ? 'text-white bg-indigo-600' : 'text-gray-900',
-                                          'cursor-default select-none relative py-2 pl-3 pr-9'
+                                          'cursor-default select-none cursor-pointer relative py-2 pl-3 pr-9'
                                         )
                                       }
                                       value={phonon}
@@ -130,7 +128,7 @@ export default function BuyModal(props) {
                     </div>
                     <div className="grid grid-cols-2 mt-2 ">
                       <p className="font-bold mr-2"> Receiving Phonon Value: </p>
-                      <p className=""> $2658 </p>
+                      <p className=""> ${order.wantValue} </p>
                     </div>
                     <div className="grid grid-cols-2 mt-2 ">
                       <p className="font-bold mr-2"> Upside: </p>

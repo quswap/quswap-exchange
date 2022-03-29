@@ -1,70 +1,16 @@
-/*
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-import { Fragment, useState } from 'react'
-import { Dialog, Disclosure, Menu, Popover, Transition } from '@headlessui/react'
-import { XIcon } from '@heroicons/react/outline'
-import { ChevronDownIcon } from '@heroicons/react/solid'
+import { Fragment } from 'react'
+import { Menu, Transition } from '@headlessui/react'
+import { classNames } from '../helpers/JoinClassNames'
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
   { name: 'Best Rating', href: '#', current: false },
   { name: 'Newest', href: '#', current: false },
 ]
-const filters = [
-  {
-    id: 'wanting',
-    name: 'Wanting',
-    options: [
-      { value: 'BTC', label: 'BTC', checked: false },
-      { value: 'ETH', label: 'ETH', checked: false },
-      { value: 'TRX', label: 'TRX', checked: true },
-      { value: 'XRP', label: 'XRP', checked: false },
-      { value: 'NFT', label: 'NFT', checked: false },
-      { value: 'SUN', label: 'SUN', checked: true },
-      { value: 'JST', label: 'JST', checked: false },
-      { value: 'WIN', label: 'WIN', checked: false },
-      { value: 'APE', label: 'APE', checked: true }
-    ],
-  },
-  {
-    id: 'offering',
-    name: 'Offering',
-    options: [
-      { value: 'BTC', label: 'BTC', checked: false },
-      { value: 'ETH', label: 'ETH', checked: false },
-      { value: 'TRX', label: 'TRX', checked: true },
-      { value: 'XRP', label: 'XRP', checked: false },
-      { value: 'NFT', label: 'NFT', checked: false },
-      { value: 'SUN', label: 'SUN', checked: true },
-      { value: 'JST', label: 'JST', checked: false },
-      { value: 'WIN', label: 'WIN', checked: false },
-      { value: 'APE', label: 'APE', checked: true }
-    ],
-  }
-]
+
 const activeFilters = [{ value: 'BTC,ETH,TRX', label: 'Wanting: XRP/TRX/NFT' }]
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-
 export default function OrderFilters() {
-  const [open, setOpen] = useState(false)
-
   return (
     <div className="bg-white rounded-md">
       {/* Mobile filter dialog */}
