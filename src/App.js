@@ -2,7 +2,7 @@
 import { Disclosure } from '@headlessui/react'
 import QuswapLogo from './quswap_img_replacement.png'
 import OrderList from './components/OrderList'
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { QuPeer } from 'quswap-protocol';
 import { getSignerAndInitialize } from './helpers/ProviderSigner';
 import { QuPeerContext } from './contexts/QuPeerContext';
