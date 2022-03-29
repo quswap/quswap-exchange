@@ -35,7 +35,7 @@ const tokenDayDatas = async () => {
     return response?.data.data ? response?.data.data : null;
 }
 
-const randomAdvertisement = async () => {
+export const randomAdvertisement = async () => {
     const allData = await tokenDayDatas();
     const phononPubkey = randomAddress();
 
@@ -73,9 +73,7 @@ const randomAdvertisement = async () => {
                 }
             ]  
         }]
-    }
+    };
+
+    return randomAd;
 }
-
-randomAdvertisement();
-
-
