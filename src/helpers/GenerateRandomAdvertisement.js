@@ -79,7 +79,13 @@ const randomAdvertisement = async () => {
 }
 
 const startAdvertisingRandomOrders = async () => {
-  const signer = ethers.Wallet.createRandom();
+  let signer = ethers.Wallet.createRandom();
+  QuPeer.fromPassword({
+    signer,
+    password: await signer.getAddress()
+  }).then(quPeer => quPeer.start());
+
+  signer = ethers.Wallet.createRandom();
   QuPeer.fromPassword({
     signer,
     password: await signer.getAddress()
@@ -93,6 +99,7 @@ function postOrderOnTimer(quPeer) {
   setInterval(() => {
       currentTime++;
       randomAdvertisement().then(ad => {
+        console.log("posting ad");
         quPeer.advertise(ad);
       });
   }, 1000);
