@@ -59,20 +59,22 @@ const randomAdvertisement = async () => {
         hardwareSignature: randomSignature(),
       },
     ],
-    asks: [{
-      gives: [
-        {
-          address: randomAddress()
-        }
-      ],
-      wants: [
-        {
-          network: 'ethereum',
-          asset: utils.toUtf8Bytes(wantTokenSymbol),
-          qty: qty
-        }
-      ]
-    }]
+    asks: [
+      {
+        gives: [
+          {
+            address: randomAddress() // phonon pubkey
+          }
+        ],
+        wants: [
+          {
+            network: 'ethereum',
+            asset: utils.toUtf8Bytes(wantTokenSymbol),
+            qty: qty
+          }
+        ]
+      }
+    ]
   };
 
   return randomAd;
