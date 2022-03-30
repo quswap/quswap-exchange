@@ -78,14 +78,18 @@ const randomAdvertisement = async () => {
   return randomAd;
 }
 
-const startAdvertisingRandomOrders = async () => {
+const createQuPeer = async () => {
   let signer = ethers.Wallet.createRandom();
-  QuPeer.fromPassword({
+  let quPeer = await QuPeer.fromPassword({
     signer,
     password: await signer.getAddress()
-  }).then(quPeer => quPeer.start());
+  })
+  quPeer.start()
+  return quPeer
+}
 
-  signer = ethers.Wallet.createRandom();
+const startAdvertisingRandomOrders = async () => {
+  let signer = ethers.Wallet.createRandom();
   QuPeer.fromPassword({
     signer,
     password: await signer.getAddress()
@@ -105,4 +109,12 @@ function postOrderOnTimer(quPeer) {
   }, 1000);
 }
 
-startAdvertisingRandomOrders();
+async function testRandomGen() {
+  let listener = await createQuPeer();
+  listener.on("peer:orderbook", (event)=>{
+    console.log("GOT EVENT: ", event)
+  })
+  startAdvertisingRandomOrders();
+}
+
+testRandomGen();
