@@ -1,8 +1,6 @@
-"use strict";
-
-const axios = require('axios');
-const ethers = require('ethers');
-const { QuPeer } = require('quswap-protocol');
+import axios from 'axios'
+import {ethers} from 'ethers'
+import { QuPeer } from 'quswap-protocol'
 
 const requestURL = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3';
 const utils = ethers.utils;
@@ -80,7 +78,7 @@ const randomAdvertisement = async () => {
   return randomAd;
 }
 
-const createQuPeer = async () => {
+export const createQuPeer = async () => {
   let signer = ethers.Wallet.createRandom();
   let quPeer = await QuPeer.fromPassword({
     signer,
@@ -90,7 +88,8 @@ const createQuPeer = async () => {
   return quPeer
 }
 
-const startAdvertisingRandomOrders = async () => {
+export const startAdvertisingRandomOrders = async () => {
+  console.log("STARTING RANDOM GENERATION")
   let signer = ethers.Wallet.createRandom();
   QuPeer.fromPassword({
     signer,
@@ -119,4 +118,4 @@ async function testRandomGen() {
   startAdvertisingRandomOrders();
 }
 
-testRandomGen();
+// testRandomGen();

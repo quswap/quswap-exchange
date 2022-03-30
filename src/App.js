@@ -3,26 +3,13 @@ import { Disclosure } from '@headlessui/react'
 import QuswapLogo from './quswap_img_replacement.png'
 import OrderList from './components/OrderList'
 import React, { useState } from 'react';
-import { QuPeer } from 'quswap-protocol';
-import { getSignerAndInitialize } from './helpers/ProviderSigner';
-import { QuPeerContext } from './contexts/QuPeerContext';
+import { useQuPeer } from './contexts/QuPeerContext';
 
 export default function App() {
-  const [quPeer, setQuPeer] = useState(null)
   const [ bondedQu, setBondedQu ] = useState(0)
-
-  const initializeQuPeer = () => {
-    (async () => {
-      const signer = await getSignerAndInitialize();
-      setQuPeer(await QuPeer.fromPassword({
-        signer,
-        password: await signer.getAddress()
-      }));
-    })().catch(console.error);
-  };
+  const { testMode, initializeQuPeer, quPeer } = useQuPeer();
 
   return (
-    <QuPeerContext.Provider value={[quPeer, setQuPeer]}>
       <div className="min-h-full">
         <Disclosure as="nav" className="bg-gray-800">
           {({ open }) => (
@@ -45,7 +32,7 @@ export default function App() {
                       className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-700 hover:bg-indigo-600"
                       onClick= { () => initializeQuPeer() }
                     >
-		                { quPeer ? quPeer.peerId.toB58String() : 'Connect to qup2p' }
+		                { quPeer ? quPeer.p2p.peerId.toB58String() : 'Connect to qup2p' }
                     </button>
                     <button
                       type="button"
@@ -79,6 +66,5 @@ export default function App() {
           </div>
         </main>
       </div>
-    </QuPeerContext.Provider>
   )
 }
