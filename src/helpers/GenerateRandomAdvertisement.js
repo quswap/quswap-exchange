@@ -1,6 +1,11 @@
-import axios from 'axios'
-import {ethers} from 'ethers'
-import { QuPeer } from 'quswap-protocol'
+'use strict';
+
+const axios = require('axios')
+const ethers = require('ethers')
+const { QuPeer } = require('quswap-protocol')
+// import axios from 'axios'
+// import {ethers} from 'ethers'
+// import { QuPeer } from 'quswap-protocol'
 
 const requestURL = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3';
 const utils = ethers.utils;

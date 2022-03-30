@@ -7,7 +7,7 @@ import { useQuPeer } from './contexts/QuPeerContext';
 
 export default function App() {
   const [ bondedQu, setBondedQu ] = useState(0)
-  const { testMode, initializeQuPeer, quPeer } = useQuPeer();
+  const { initializeQuPeer, quPeer } = useQuPeer();
 
   return (
       <div className="min-h-full">
