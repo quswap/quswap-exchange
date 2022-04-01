@@ -1,4 +1,5 @@
-module.exports = function override(config, env) {
+const webpack = require('webpack')
+module.exports = function override(config) {
   config.resolve.fallback = {
     fs: false,
     tls: false,
@@ -12,5 +13,11 @@ module.exports = function override(config, env) {
     stream: require.resolve('stream-browserify')
   };
   config.ignoreWarnings = [/Failed to parse source map/];
+  config.plugins = (config.plugins || []).concat([ 
+    new webpack.ProvidePlugin({ 
+     process: 'process/browser', 
+     Buffer: ['buffer', 'Buffer'] 
+   }) 
+  ]) 
   return config;
 }

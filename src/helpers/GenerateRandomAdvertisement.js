@@ -1,8 +1,7 @@
-'use strict';
-
 const axios = require('axios')
 const ethers = require('ethers')
 const { QuPeer } = require('quswap-protocol')
+const TokenData = require('./RandomTokens.json')
 // import axios from 'axios'
 // import {ethers} from 'ethers'
 // import { QuPeer } from 'quswap-protocol'
@@ -23,24 +22,8 @@ function getRandomArbitrary(min, max) {
 const randomAddress = () => utils.hexlify(utils.randomBytes(20));
 const randomSignature = () => utils.hexlify(utils.randomBytes(65));
 
-const tokenDayDatas = async () => {
-  let response;
-
-  try {
-    response = await axios({
-      url: requestURL,
-      method: 'post',
-      data: "{\"query\":\"{\\n  tokenDayDatas(first: 100, orderBy:volumeUSD, where:{date:1648425600}, orderDirection:desc) {\\n\\t\\t\\tid\\n      priceUSD\\n      token {\\n        id\\n        symbol\\n        name\\n        derivedETH\\n      }\\n  }\\n  bundles {\\n    ethPriceUSD\\n  }\\n}\\n\",\"variables\":null}"
-    })
-  } catch (e) {
-    throw new Error(e.message);
-  };
-
-  return response?.data.data ? response?.data.data : null;
-}
-
 const randomAdvertisement = async () => {
-  const allData = await tokenDayDatas();
+  const allData = TokenData;
   const phononPubkey = randomAddress();
   var rOne = getRandomIntInclusive(0, 99);
   const wantTokenSymbol = allData.tokenDayDatas[rOne].token.symbol;
@@ -83,7 +66,7 @@ const randomAdvertisement = async () => {
   return randomAd;
 }
 
-export const createQuPeer = async () => {
+const createQuPeer = async () => {
   let signer = ethers.Wallet.createRandom();
   let quPeer = await QuPeer.fromPassword({
     signer,
@@ -93,7 +76,7 @@ export const createQuPeer = async () => {
   return quPeer
 }
 
-export const startAdvertisingRandomOrders = async () => {
+const startAdvertisingRandomOrders = async () => {
   console.log("STARTING RANDOM GENERATION")
   let signer = ethers.Wallet.createRandom();
   QuPeer.fromPassword({
@@ -102,12 +85,10 @@ export const startAdvertisingRandomOrders = async () => {
   }).then(quPeer => postOrderOnTimer(quPeer));
 }
 
-function postOrderOnTimer(quPeer) {
-  quPeer.start();
-  let currentTime = 0;
+async function postOrderOnTimer(quPeer) {
+  await quPeer.start();
 
   setInterval(() => {
-      currentTime++;
       randomAdvertisement().then(ad => {
         console.log("posting ad");
         quPeer.advertise(ad);
@@ -123,4 +104,4 @@ async function testRandomGen() {
   startAdvertisingRandomOrders();
 }
 
-// testRandomGen();
+testRandomGen();
