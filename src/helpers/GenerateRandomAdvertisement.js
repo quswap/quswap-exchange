@@ -66,7 +66,7 @@ const randomAdvertisement = async () => {
   return randomAd;
 }
 
-const createQuPeer = async () => {
+export const createQuPeer = async () => {
   let signer = ethers.Wallet.createRandom();
   let quPeer = await QuPeer.fromPassword({
     signer,
@@ -76,7 +76,7 @@ const createQuPeer = async () => {
   return quPeer
 }
 
-const startAdvertisingRandomOrders = async () => {
+export const startAdvertisingRandomOrders = async () => {
   console.log("STARTING RANDOM GENERATION")
   let signer = ethers.Wallet.createRandom();
   QuPeer.fromPassword({
@@ -96,12 +96,13 @@ async function postOrderOnTimer(quPeer) {
   }, 1000);
 }
 
-async function testRandomGen() {
+export async function testRandomGen() {
   let listener = await createQuPeer();
+  console.log("Started Listening!");
   listener.on("peer:orderbook", (event)=>{
     console.log("GOT EVENT: ", event)
-  })
+  });
   startAdvertisingRandomOrders();
 }
 
-testRandomGen();
+// testRandomGen();

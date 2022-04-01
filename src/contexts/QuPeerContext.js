@@ -2,7 +2,7 @@
 import { createContext, useEffect, useContext, useState } from 'react'
 import { QuPeer } from 'quswap-protocol';
 import { getSignerAndInitialize } from '../helpers/ProviderSigner';
-import { startAdvertisingRandomOrders, createQuPeer } from '../helpers/GenerateRandomAdvertisement';
+import { startAdvertisingRandomOrders, createQuPeer, testRandomGen } from '../helpers/GenerateRandomAdvertisement';
 
 const QuPeerContext = createContext();
 
@@ -28,23 +28,24 @@ export function QuPeerProvider({ children }) {
 
   // we only want this to run once, hence useEffect
   useEffect(() => {
-      console.log("trigger useeffect")
+    console.log("trigger useeffect")
     if (quPeer) {
-        console.log("triggering listening...")
-        quPeer.start();
-        quPeer.on("peer:orderbook", (event)=>{
-            console.log("GOT EVENT: ", event)
-        })
-        if (testMode) {
-            createQuPeer().then(listener => {
-                console.log("Created random listener")
-                listener.on("peer:orderbook", (event)=>{
-                    console.log("RANDOM LISTENER GOT EVENT: ", event)
-                })
-            });
-            startAdvertisingRandomOrders();
-        }
-        console.log("made it to end")
+      console.log("triggering listening...")
+      quPeer.start();
+      quPeer.on("peer:orderbook", (event)=>{
+          console.log("GOT EVENT: ", event)
+      })
+      if (testMode) {
+          createQuPeer().then(listener => {
+              console.log("Created random listener")
+              listener.on("peer:orderbook", (event)=>{
+                  console.log("RANDOM LISTENER GOT EVENT: ", event)
+              })
+          });
+          startAdvertisingRandomOrders();
+      }
+      console.log("made it to end")
+      // testRandomGen();
     }
   }, [quPeer]);
 
