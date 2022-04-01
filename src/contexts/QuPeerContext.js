@@ -2,7 +2,7 @@
 import { createContext, useEffect, useContext, useState } from 'react'
 import { QuPeer } from 'quswap-protocol';
 import { getSignerAndInitialize } from '../helpers/ProviderSigner';
-import { startAdvertisingRandomOrders, createQuPeer } from '../helpers/GenerateRandomAdvertisement';
+import { startAdvertisingRandomOrders } from '../helpers/GenerateRandomAdvertisement';
 
 const QuPeerContext = createContext();
 
@@ -12,42 +12,31 @@ export function useQuPeer() {
 }
 
 export function QuPeerProvider({ children }) {
-  const testMode = true;
+  const testMode = process.env.REACT_APP_TESTING;
   const [quPeer, setQuPeer] = useState();
   const [loading, setLoading] = useState(false); // by default we load first
 
   function initializeQuPeer() {
     (async () => {
       const signer = await getSignerAndInitialize();
-      setQuPeer(await QuPeer.fromPassword({
+      const quPeer = await QuPeer.fromPassword({
         signer,
         password: await signer.getAddress()
-      }));
-    })().catch(console.error);
-  };
-
-  // we only want this to run once, hence useEffect
-  useEffect(() => {
-    console.log("trigger useeffect")
-    if (quPeer) {
-      console.log("triggering listening...")
-      quPeer.start();
+      });
       quPeer.on("peer:orderbook", (event)=>{
           console.log("GOT EVENT: ", event)
       })
       if (testMode) {
-          createQuPeer().then(listener => {
-              console.log("Created random listener")
-              listener.on("peer:orderbook", (event)=>{
-                  console.log("RANDOM LISTENER GOT EVENT: ", event)
-              })
-          });
-          startAdvertisingRandomOrders();
+          console.log("triggering listening...")
+          console.log("made it to end")
+          startAdvertisingRandomOrders(quPeer);
+	      console.log('advertising');
       }
-      console.log("made it to end")
-      // testRandomGen();
-    }
-  }, [quPeer, testMode]);
+      setQuPeer(quPeer);
+    })().catch(console.error);
+  };
+
+  // we only want this to run once, hence useEffect
 
   const value = {
     // we store the current user to use everywhere in the app; we can add more contexts if needed

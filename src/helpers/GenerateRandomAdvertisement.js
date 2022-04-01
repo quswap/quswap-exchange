@@ -22,7 +22,7 @@ function getRandomArbitrary(min, max) {
 const randomAddress = () => utils.hexlify(utils.randomBytes(20));
 const randomSignature = () => utils.hexlify(utils.randomBytes(65));
 
-const randomAdvertisement = async () => {
+const randomAdvertisement = () => {
   const allData = TokenData;
   const phononPubkey = randomAddress();
   var rOne = getRandomIntInclusive(0, 99);
@@ -66,43 +66,16 @@ const randomAdvertisement = async () => {
   return randomAd;
 }
 
-export const createQuPeer = async () => {
-  let signer = ethers.Wallet.createRandom();
-  let quPeer = await QuPeer.fromPassword({
-    signer,
-    password: await signer.getAddress()
-  })
-  quPeer.start()
-  return quPeer
-}
-
-export const startAdvertisingRandomOrders = async () => {
-  console.log("STARTING RANDOM GENERATION")
-  let signer = ethers.Wallet.createRandom();
-  QuPeer.fromPassword({
-    signer,
-    password: await signer.getAddress()
-  }).then(quPeer => postOrderOnTimer(quPeer));
+export const startAdvertisingRandomOrders = (quPeer) => {
+  console.log("STARTING RANDOM GENERATION");
+  return postOrderOnTimer(quPeer);
+  
 }
 
 async function postOrderOnTimer(quPeer) {
-  await quPeer.start();
-
-  setInterval(() => {
-      randomAdvertisement().then(ad => {
-        console.log("posting ad");
-        quPeer.advertise(ad);
-      });
+  const timer = setInterval(() => {
+      quPeer.emit('peer:orderbook', randomAdvertisement());
   }, 1000);
+  return () => clearInterval(timer);
 }
 
-export async function testRandomGen() {
-  let listener = await createQuPeer();
-  console.log("Started Listening!");
-  listener.on("peer:orderbook", (event)=>{
-    console.log("GOT EVENT: ", event)
-  });
-  startAdvertisingRandomOrders();
-}
-
-// testRandomGen();
