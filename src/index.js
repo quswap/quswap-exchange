@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { QuPeerProvider } from './contexts/QuPeerContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <QuPeerProvider>
+      <App />
+    </QuPeerProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
