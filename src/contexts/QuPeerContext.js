@@ -2,7 +2,7 @@
 import { createContext, useEffect, useContext, useState } from 'react'
 import { QuPeer } from 'quswap-protocol';
 import { getSignerAndInitialize } from '../helpers/ProviderSigner';
-import { startAdvertisingRandomOrders, createQuPeer, testRandomGen } from '../helpers/GenerateRandomAdvertisement';
+import { startAdvertisingRandomOrders, createQuPeer } from '../helpers/GenerateRandomAdvertisement';
 
 const QuPeerContext = createContext();
 
@@ -47,7 +47,7 @@ export function QuPeerProvider({ children }) {
       console.log("made it to end")
       // testRandomGen();
     }
-  }, [quPeer]);
+  }, [quPeer, testMode]);
 
   const value = {
     // we store the current user to use everywhere in the app; we can add more contexts if needed
