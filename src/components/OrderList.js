@@ -1,7 +1,8 @@
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import OrderFilters from './OrderFilters'
 import BuyModal from './modals/BuyModal'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useQuPeer } from '../contexts/QuPeerContext';
 
 /* This example requires Tailwind CSS v2.0+ */
 const listings = [
@@ -83,6 +84,11 @@ const listings = [
 export default function OrderList() {
   const [selectedOrder, setSelectedOrder] = useState({})
   const [modalCount, setModalCount] = useState(0);
+  const { orderbook } = useQuPeer();
+
+  useEffect(() => {
+    console.log(orderbook)
+  }, [orderbook])
   
   return (
     <div className="p-8 sm:px-6 lg:px-8 border-2 border-gray-200 p-4 bg-gray-200 rounded-md">

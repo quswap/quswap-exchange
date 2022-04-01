@@ -1,4 +1,3 @@
-// const [quPeer, setQuPeer] = useContext(QuPeerContext)
 import { createContext, useEffect, useContext, useState } from 'react'
 import { QuPeer } from 'quswap-protocol';
 import { getSignerAndInitialize } from '../helpers/ProviderSigner';
@@ -14,6 +13,7 @@ export function useQuPeer() {
 export function QuPeerProvider({ children }) {
   const testMode = process.env.REACT_APP_TESTING;
   const [quPeer, setQuPeer] = useState();
+  const [orderbook, setOrderbook] = useState();
   const [loading, setLoading] = useState(false); // by default we load first
 
   function initializeQuPeer() {
@@ -25,6 +25,7 @@ export function QuPeerProvider({ children }) {
       });
       quPeer.on("peer:orderbook", (event)=>{
           console.log("GOT EVENT: ", event)
+          setOrderbook(event.orderbook)
       })
       if (testMode) {
           console.log("triggering listening...")
@@ -36,12 +37,11 @@ export function QuPeerProvider({ children }) {
     })().catch(console.error);
   };
 
-  // we only want this to run once, hence useEffect
-
   const value = {
     // we store the current user to use everywhere in the app; we can add more contexts if needed
     testMode,
     quPeer,
+    orderbook,
     initializeQuPeer
   };
   return (
