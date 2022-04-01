@@ -1,6 +1,7 @@
 const axios = require('axios')
 const ethers = require('ethers')
 const { QuPeer } = require('quswap-protocol')
+const PeerId = require('peer-id');
 const TokenData = require('./RandomTokens.json')
 // import axios from 'axios'
 // import {ethers} from 'ethers'
@@ -22,12 +23,14 @@ function getRandomArbitrary(min, max) {
 const randomAddress = () => utils.hexlify(utils.randomBytes(20));
 const randomSignature = () => utils.hexlify(utils.randomBytes(65));
 
-const randomAdvertisement = () => {
+
+const randomAdvertisement = async () => {
   const allData = TokenData;
   const phononPubkey = randomAddress();
   var rOne = getRandomIntInclusive(0, 99);
   const wantTokenSymbol = allData.tokenDayDatas[rOne].token.symbol;
   const qty = getRandomArbitrary(0.01, 100.00);
+  const peerId = await PeerId.create();
 
   const randomAd = {
     phonons: [
@@ -63,7 +66,10 @@ const randomAdvertisement = () => {
     ]
   };
 
-  return randomAd;
+  return {
+    from: peerId.toB58String(),
+    orderbook: randomAd
+  };
 }
 
 export const startAdvertisingRandomOrders = (quPeer) => {
@@ -73,9 +79,9 @@ export const startAdvertisingRandomOrders = (quPeer) => {
 }
 
 async function postOrderOnTimer(quPeer) {
-  const timer = setInterval(() => {
-      quPeer.emit('peer:orderbook', randomAdvertisement());
-  }, 1000);
+  const timer = setInterval(async () => {
+      quPeer.emit('peer:orderbook', await randomAdvertisement());
+  }, 4000);
   return () => clearInterval(timer);
 }
 
